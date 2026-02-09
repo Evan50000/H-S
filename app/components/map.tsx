@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, FormEvent } from "react";
+import { useEffect, useState, FormEvent,ButtonHTMLAttributes, FC } from "react";
 import "leaflet/dist/leaflet.css";
 
 export default function Map() {
@@ -8,19 +8,26 @@ export default function Map() {
 
   useEffect(() => {
     // Only runs in the browser
-    import("leaflet").then((L) => {
-      const map = L.map("map").setView([18.3002, -64.8252], 13);
 
+    import("leaflet").then((L) => {
+      const map = L.map("map");
       const seekicon = L.icon({
         iconUrl: "https://cdn-icons-png.flaticon.com/512/7477/7477317.png",
         iconAnchor: [22, 94],
         popupAnchor: [0, 0],
         iconSize: [38, 95],
       });
-
-      const marker = L.marker([18.302, -64.8252], { icon: seekicon }).addTo(map);
-      marker.bindPopup("<b>Seeker</b><br>Bob & Joe").openPopup();
-
+    
+    navigator.geolocation.getCurrentPosition(
+      (position: GeolocationPosition) => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+      
+      const marker = L.marker([latitude, longitude], { icon: seekicon }).addTo(map);
+      map.setView([latitude, longitude], 21)
+      marker.bindPopup("<b>your location</b><br>you rn").openPopup();
+    },);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
       }).addTo(map);
@@ -33,7 +40,7 @@ export default function Map() {
     });
   }, []);
 
-  const handleAddMarker = (event: FormEvent<HTMLFormElement>) => {
+  const addmarker = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!mapInstance) return;
       const seekicon = mapInstance.L.icon({
@@ -54,7 +61,7 @@ export default function Map() {
   return (
     <div>
       <form
-        onSubmit={handleAddMarker}
+        onSubmit={addmarker}
         style={{
           position: "absolute",
           bottom: 10,
