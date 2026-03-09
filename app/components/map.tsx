@@ -1,14 +1,15 @@
 "use client";
-
+"use server";
 import { useEffect, useState, FormEvent,ButtonHTMLAttributes, FC } from "react";
 import "leaflet/dist/leaflet.css";
-
+import { db } from "@/lib/singletondat";
+//import socket.io
 export default function Map() {
   const [mapInstance, setMapInstance] = useState<any>(null);
 
   useEffect(() => {
     // Only runs in the browser
-
+    
     import("leaflet").then((L) => {
       const map = L.map("map");
       const seekicon = L.icon({
@@ -17,13 +18,17 @@ export default function Map() {
         popupAnchor: [0, 0],
         iconSize: [38, 95],
       });
-    
-    navigator.geolocation.getCurrentPosition(
-      (position: GeolocationPosition) => {
+  
+    navigator.geolocation.getCurrentPosition(async (position: GeolocationPosition) => {
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
       console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-      
+      const result = await db.userLocation.create({
+        data: {
+          latitude: latitude,
+          longitude: longitude,
+        },
+      });
       const marker = L.marker([latitude, longitude], { icon: seekicon }).addTo(map);
       map.setView([latitude, longitude], 21)
       marker.bindPopup("<b>your location</b><br>you rn").openPopup();
@@ -39,7 +44,20 @@ export default function Map() {
       };
     });
   }, []);
+  const chat = ({
+    OnSendMessage,
+  }: {
+    OnSendMessage: (message:string) => void;
+  }) =>{}
+    const [message, setmessage] = useState("");
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      if (message.trim() !== "") {
+        setmessage("");
 
+      
+      }
+    };
   const addmarker = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!mapInstance) return;
@@ -60,6 +78,17 @@ export default function Map() {
 
   return (
     <div>
+      <form onSubmit={handleSubmit} className="flex gap-2 mt-4">
+        <input
+        type = "text"
+        onChange={(e) => setmessage(e.target.value)}
+        className = "flex-1 px-4 border-2 py-2 rounded-lg focus:outline-none"
+        placeholder = "write message to opponent"
+        >
+        </input>
+        <button type="submit">send</button>
+
+      </form>
       <form
         onSubmit={addmarker}
         style={{
@@ -82,3 +111,5 @@ export default function Map() {
     </div>
   );
 }
+
+
