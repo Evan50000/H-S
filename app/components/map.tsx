@@ -1,8 +1,8 @@
 "use client";
-"use server";
+
 import { useEffect, useState, FormEvent,ButtonHTMLAttributes, FC } from "react";
 import "leaflet/dist/leaflet.css";
-import { db } from "@/lib/singletondat";
+import { saveLocation } from "@/lib/action";
 //import socket.io
 export default function Map() {
   const [mapInstance, setMapInstance] = useState<any>(null);
@@ -23,12 +23,7 @@ export default function Map() {
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
       console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-      const result = await db.userLocation.create({
-        data: {
-          latitude: latitude,
-          longitude: longitude,
-        },
-      });
+      const result = await saveLocation(latitude, longitude);
       const marker = L.marker([latitude, longitude], { icon: seekicon }).addTo(map);
       map.setView([latitude, longitude], 21)
       marker.bindPopup("<b>your location</b><br>you rn").openPopup();
