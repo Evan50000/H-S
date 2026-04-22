@@ -10,7 +10,9 @@ datasource db {
 
 model UserLocation {
   id        Int      @id @default(autoincrement())
+  userId    String   @unique
   latitude  Float
   longitude Float
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

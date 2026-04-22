@@ -892,23 +892,29 @@ export namespace Prisma {
 
   export type UserLocationMinAggregateOutputType = {
     id: number | null
+    userId: string | null
     latitude: number | null
     longitude: number | null
     createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type UserLocationMaxAggregateOutputType = {
     id: number | null
+    userId: string | null
     latitude: number | null
     longitude: number | null
     createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type UserLocationCountAggregateOutputType = {
     id: number
+    userId: number
     latitude: number
     longitude: number
     createdAt: number
+    updatedAt: number
     _all: number
   }
 
@@ -927,23 +933,29 @@ export namespace Prisma {
 
   export type UserLocationMinAggregateInputType = {
     id?: true
+    userId?: true
     latitude?: true
     longitude?: true
     createdAt?: true
+    updatedAt?: true
   }
 
   export type UserLocationMaxAggregateInputType = {
     id?: true
+    userId?: true
     latitude?: true
     longitude?: true
     createdAt?: true
+    updatedAt?: true
   }
 
   export type UserLocationCountAggregateInputType = {
     id?: true
+    userId?: true
     latitude?: true
     longitude?: true
     createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -1035,9 +1047,11 @@ export namespace Prisma {
 
   export type UserLocationGroupByOutputType = {
     id: number
+    userId: string
     latitude: number
     longitude: number
     createdAt: Date
+    updatedAt: Date
     _count: UserLocationCountAggregateOutputType | null
     _avg: UserLocationAvgAggregateOutputType | null
     _sum: UserLocationSumAggregateOutputType | null
@@ -1061,42 +1075,52 @@ export namespace Prisma {
 
   export type UserLocationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    userId?: boolean
     latitude?: boolean
     longitude?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
   }, ExtArgs["result"]["userLocation"]>
 
   export type UserLocationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    userId?: boolean
     latitude?: boolean
     longitude?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
   }, ExtArgs["result"]["userLocation"]>
 
   export type UserLocationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    userId?: boolean
     latitude?: boolean
     longitude?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
   }, ExtArgs["result"]["userLocation"]>
 
   export type UserLocationSelectScalar = {
     id?: boolean
+    userId?: boolean
     latitude?: boolean
     longitude?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type UserLocationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "latitude" | "longitude" | "createdAt", ExtArgs["result"]["userLocation"]>
+  export type UserLocationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "latitude" | "longitude" | "createdAt" | "updatedAt", ExtArgs["result"]["userLocation"]>
 
   export type $UserLocationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "UserLocation"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      userId: string
       latitude: number
       longitude: number
       createdAt: Date
+      updatedAt: Date
     }, ExtArgs["result"]["userLocation"]>
     composites: {}
   }
@@ -1521,9 +1545,11 @@ export namespace Prisma {
    */
   interface UserLocationFieldRefs {
     readonly id: FieldRef<"UserLocation", 'Int'>
+    readonly userId: FieldRef<"UserLocation", 'String'>
     readonly latitude: FieldRef<"UserLocation", 'Float'>
     readonly longitude: FieldRef<"UserLocation", 'Float'>
     readonly createdAt: FieldRef<"UserLocation", 'DateTime'>
+    readonly updatedAt: FieldRef<"UserLocation", 'DateTime'>
   }
     
 
@@ -1911,9 +1937,11 @@ export namespace Prisma {
 
   export const UserLocationScalarFieldEnum: {
     id: 'id',
+    userId: 'userId',
     latitude: 'latitude',
     longitude: 'longitude',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type UserLocationScalarFieldEnum = (typeof UserLocationScalarFieldEnum)[keyof typeof UserLocationScalarFieldEnum]
@@ -1925,6 +1953,14 @@ export namespace Prisma {
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const QueryMode: {
+    default: 'default',
+    insensitive: 'insensitive'
+  };
+
+  export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
   /**
@@ -1943,6 +1979,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'String'
+   */
+  export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
+    
+
+
+  /**
+   * Reference to a field of type 'String[]'
+   */
+  export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
     
 
 
@@ -1982,33 +2032,41 @@ export namespace Prisma {
     OR?: UserLocationWhereInput[]
     NOT?: UserLocationWhereInput | UserLocationWhereInput[]
     id?: IntFilter<"UserLocation"> | number
+    userId?: StringFilter<"UserLocation"> | string
     latitude?: FloatFilter<"UserLocation"> | number
     longitude?: FloatFilter<"UserLocation"> | number
     createdAt?: DateTimeFilter<"UserLocation"> | Date | string
+    updatedAt?: DateTimeFilter<"UserLocation"> | Date | string
   }
 
   export type UserLocationOrderByWithRelationInput = {
     id?: SortOrder
+    userId?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type UserLocationWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    userId?: string
     AND?: UserLocationWhereInput | UserLocationWhereInput[]
     OR?: UserLocationWhereInput[]
     NOT?: UserLocationWhereInput | UserLocationWhereInput[]
     latitude?: FloatFilter<"UserLocation"> | number
     longitude?: FloatFilter<"UserLocation"> | number
     createdAt?: DateTimeFilter<"UserLocation"> | Date | string
-  }, "id">
+    updatedAt?: DateTimeFilter<"UserLocation"> | Date | string
+  }, "id" | "userId">
 
   export type UserLocationOrderByWithAggregationInput = {
     id?: SortOrder
+    userId?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
     _count?: UserLocationCountOrderByAggregateInput
     _avg?: UserLocationAvgOrderByAggregateInput
     _max?: UserLocationMaxOrderByAggregateInput
@@ -2021,55 +2079,71 @@ export namespace Prisma {
     OR?: UserLocationScalarWhereWithAggregatesInput[]
     NOT?: UserLocationScalarWhereWithAggregatesInput | UserLocationScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"UserLocation"> | number
+    userId?: StringWithAggregatesFilter<"UserLocation"> | string
     latitude?: FloatWithAggregatesFilter<"UserLocation"> | number
     longitude?: FloatWithAggregatesFilter<"UserLocation"> | number
     createdAt?: DateTimeWithAggregatesFilter<"UserLocation"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"UserLocation"> | Date | string
   }
 
   export type UserLocationCreateInput = {
+    userId: string
     latitude: number
     longitude: number
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type UserLocationUncheckedCreateInput = {
     id?: number
+    userId: string
     latitude: number
     longitude: number
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type UserLocationUpdateInput = {
+    userId?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserLocationUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserLocationCreateManyInput = {
     id?: number
+    userId: string
     latitude: number
     longitude: number
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type UserLocationUpdateManyMutationInput = {
+    userId?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserLocationUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -2081,6 +2155,21 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type StringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringFilter<$PrismaModel> | string
   }
 
   export type FloatFilter<$PrismaModel = never> = {
@@ -2107,9 +2196,11 @@ export namespace Prisma {
 
   export type UserLocationCountOrderByAggregateInput = {
     id?: SortOrder
+    userId?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type UserLocationAvgOrderByAggregateInput = {
@@ -2120,16 +2211,20 @@ export namespace Prisma {
 
   export type UserLocationMaxOrderByAggregateInput = {
     id?: SortOrder
+    userId?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type UserLocationMinOrderByAggregateInput = {
     id?: SortOrder
+    userId?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type UserLocationSumOrderByAggregateInput = {
@@ -2152,6 +2247,24 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -2184,6 +2297,10 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
+  }
+
   export type FloatFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -2213,6 +2330,20 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedStringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringFilter<$PrismaModel> | string
   }
 
   export type NestedFloatFilter<$PrismaModel = never> = {
@@ -2251,6 +2382,23 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {

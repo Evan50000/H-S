@@ -1,11 +1,13 @@
 'use server'
-
 import { db } from '@/lib/singletondat'
 
-export async function saveLocation(lat: number, lng: number) {
+export async function saveLocation(lat: number, lng: number, userId: string) {
   try {
-    const newEntry = await db.userLocation.create({
-      data: {
+    const newEntry = await db.userLocation.upsert({
+      where: { userId },
+      update: { latitude: lat, longitude: lng },
+      create: {
+        userId,
         latitude: lat,
         longitude: lng,
       },
