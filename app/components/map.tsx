@@ -1,11 +1,13 @@
 "use client";
-import { useEffect, useState, FormEvent } from "react";
+import { useEffect, useState, FormEvent, useRef} from "react";
 import "leaflet/dist/leaflet.css";
 import { saveLocation } from "@/lib/action";
 const MY_USER_ID = Math.random().toString(36).slice(2)
+
 export default function Map() {
   const [locations, setLocations] = useState([])
   const [mapInstance, setMapInstance] = useState<any>(null);
+  const markersRef = useRef<any[]>([]);
 
   useEffect(() => {
 
@@ -89,7 +91,28 @@ export default function Map() {
     const marker = mapInstance.L.marker([lat, lon], { icon: seekicon }).addTo(mapInstance.map);
     marker.bindPopup(`<b>${name}</b>`).openPopup();
   };
+const addLocationMarkers = (locations: any[]) => {
+  if (!mapInstance) return;
 
+  // Clear existing markers
+  markersRef.current.forEach(marker => marker.remove());
+  markersRef.current = [];
+
+  const seekicon = mapInstance.L.icon({
+    iconUrl: "https://cdn-icons-png.flaticon.com/512/7477/7477317.png",
+    iconAnchor: [22, 94],
+    popupAnchor: [0, 0],
+    iconSize: [38, 95],
+  });
+
+  // Add a marker for each fetched location
+  locations.forEach(loc => {
+    const marker = mapInstance.L.marker([loc.lat, loc.lon], { icon: seekicon })
+      .addTo(mapInstance.map);
+    marker.bindPopup(`<b>${loc.name}</b>`).openPopup();
+    markersRef.current.push(marker); // track it for cleanup
+  });
+};
   return (
     <div>
       <form
@@ -106,7 +129,6 @@ export default function Map() {
       >
         <input name="lat" step="any" placeholder="Latitude" required />
         <input name="lon" step="any" placeholder="Longitude" required />
-        <input type="text" name="name" placeholder="Marker Name" required />
         <button type="submit">Add Marker</button>
       </form>
       <div id="map" style={{ height: "100vh", width: "100vw" }} />
