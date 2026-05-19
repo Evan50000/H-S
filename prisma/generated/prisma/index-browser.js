@@ -141,7 +141,7 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
-  userLocation: 'userLocation'
+  UserLocation: 'UserLocation'
 };
 
 /**
