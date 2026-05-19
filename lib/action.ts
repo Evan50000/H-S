@@ -3,7 +3,7 @@ import { db } from '@/lib/singletondat'
 
 export async function saveLocation(lat: number, lng: number, userId: string) {
   try {
-    const newEntry = await db.UserLocation.upsert({
+    const newEntry = await db.userLocation.upsert({
       where: { userId },
       update: { latitude: lat, longitude: lng },
       create: {
