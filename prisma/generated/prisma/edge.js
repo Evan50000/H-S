@@ -39,12 +39,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 7.7.0
- * Query Engine version: 75cbdc1eb7150937890ad5465d861175c6624711
+ * Prisma Client JS version: 7.8.0
+ * Query Engine version: 3c6e192761c0362d496ed980de936e2f3cebcd3a
  */
 Prisma.prismaVersion = {
-  client: "7.7.0",
-  engine: "75cbdc1eb7150937890ad5465d861175c6624711"
+  client: "7.8.0",
+  engine: "3c6e192761c0362d496ed980de936e2f3cebcd3a"
 }
 
 Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
@@ -113,7 +113,7 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
-  UserLocation: 'UserLocation'
+  userLocation: 'userLocation'
 };
 /**
  * Create the Client
@@ -122,16 +122,16 @@ const config = {
   "previewFeatures": [
     "driverAdapters"
   ],
-  "clientVersion": "7.7.0",
-  "engineVersion": "75cbdc1eb7150937890ad5465d861175c6624711",
+  "clientVersion": "7.8.0",
+  "engineVersion": "3c6e192761c0362d496ed980de936e2f3cebcd3a",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider        = \"prisma-client-js\"\n  output          = \"./generated/prisma\"\n  previewFeatures = [\"driverAdapters\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel UserLocation {\n  id        Int      @id @default(autoincrement())\n  userId    String   @unique\n  latitude  Float\n  longitude Float\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n"
+  "inlineSchema": "generator client {\n  provider        = \"prisma-client-js\"\n  output          = \"./generated/prisma\"\n  previewFeatures = [\"driverAdapters\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel userLocation {\n  id        Int      @id @default(autoincrement())\n  userId    String   @unique\n  latitude  Float\n  longitude Float\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n"
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"UserLocation\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"latitude\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"longitude\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"userLocation\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"latitude\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"longitude\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.parameterizationSchema = {
-  strings: JSON.parse("[\"where\",\"UserLocation.findUnique\",\"UserLocation.findUniqueOrThrow\",\"orderBy\",\"cursor\",\"UserLocation.findFirst\",\"UserLocation.findFirstOrThrow\",\"UserLocation.findMany\",\"data\",\"UserLocation.createOne\",\"UserLocation.createMany\",\"UserLocation.createManyAndReturn\",\"UserLocation.updateOne\",\"UserLocation.updateMany\",\"UserLocation.updateManyAndReturn\",\"create\",\"update\",\"UserLocation.upsertOne\",\"UserLocation.deleteOne\",\"UserLocation.deleteMany\",\"having\",\"_count\",\"_avg\",\"_sum\",\"_min\",\"_max\",\"UserLocation.groupBy\",\"UserLocation.aggregate\",\"AND\",\"OR\",\"NOT\",\"id\",\"userId\",\"latitude\",\"longitude\",\"createdAt\",\"updatedAt\",\"equals\",\"in\",\"notIn\",\"lt\",\"lte\",\"gt\",\"gte\",\"not\",\"contains\",\"startsWith\",\"endsWith\",\"set\",\"increment\",\"decrement\",\"multiply\",\"divide\"]"),
+  strings: JSON.parse("[\"where\",\"userLocation.findUnique\",\"userLocation.findUniqueOrThrow\",\"orderBy\",\"cursor\",\"userLocation.findFirst\",\"userLocation.findFirstOrThrow\",\"userLocation.findMany\",\"data\",\"userLocation.createOne\",\"userLocation.createMany\",\"userLocation.createManyAndReturn\",\"userLocation.updateOne\",\"userLocation.updateMany\",\"userLocation.updateManyAndReturn\",\"create\",\"update\",\"userLocation.upsertOne\",\"userLocation.deleteOne\",\"userLocation.deleteMany\",\"having\",\"_count\",\"_avg\",\"_sum\",\"_min\",\"_max\",\"userLocation.groupBy\",\"userLocation.aggregate\",\"AND\",\"OR\",\"NOT\",\"id\",\"userId\",\"latitude\",\"longitude\",\"createdAt\",\"updatedAt\",\"equals\",\"in\",\"notIn\",\"lt\",\"lte\",\"gt\",\"gte\",\"not\",\"contains\",\"startsWith\",\"endsWith\",\"set\",\"increment\",\"decrement\",\"multiply\",\"divide\"]"),
   graph: "NAsQCRwAACcAMB0AAAQAEB4AACcAMB8CAAAAASABAAAAASEIACoAISIIACoAISNAACsAISRAACsAIQEAAAABACABAAAAAQAgCRwAACcAMB0AAAQAEB4AACcAMB8CACgAISABACkAISEIACoAISIIACoAISNAACsAISRAACsAIQADAAAABAAgAwAABQAwBAAAAQAgAwAAAAQAIAMAAAUAMAQAAAEAIAMAAAAEACADAAAFADAEAAABACAGHwIAAAABIAEAAAABIQgAAAABIggAAAABI0AAAAABJEAAAAABAQgAAAkAIAYfAgAAAAEgAQAAAAEhCAAAAAEiCAAAAAEjQAAAAAEkQAAAAAEBCAAACwAwAQgAAAsAMAYfAgA0ACEgAQAxACEhCAAyACEiCAAyACEjQAAzACEkQAAzACECAAAAAQAgCAAADgAgBh8CADQAISABADEAISEIADIAISIIADIAISNAADMAISRAADMAIQIAAAAEACAIAAAQACACAAAABAAgCAAAEAAgAwAAAAEAIA8AAAkAIBAAAA4AIAEAAAABACABAAAABAAgBRUAACwAIBYAAC0AIBcAADAAIBgAAC8AIBkAAC4AIAkcAAAaADAdAAAXABAeAAAaADAfAgAbACEgAQAcACEhCAAdACEiCAAdACEjQAAeACEkQAAeACEDAAAABAAgAwAAFgAwFAAAFwAgAwAAAAQAIAMAAAUAMAQAAAEAIAkcAAAaADAdAAAXABAeAAAaADAfAgAbACEgAQAcACEhCAAdACEiCAAdACEjQAAeACEkQAAeACENFQAAIAAgFgAAIwAgFwAAIAAgGAAAIAAgGQAAIAAgJQIAAAABJgIAAAAEJwIAAAAEKAIAAAABKQIAAAABKgIAAAABKwIAAAABLAIAJgAhDhUAACAAIBgAACUAIBkAACUAICUBAAAAASYBAAAABCcBAAAABCgBAAAAASkBAAAAASoBAAAAASsBAAAAASwBACQAIS0BAAAAAS4BAAAAAS8BAAAAAQ0VAAAgACAWAAAjACAXAAAjACAYAAAjACAZAAAjACAlCAAAAAEmCAAAAAQnCAAAAAQoCAAAAAEpCAAAAAEqCAAAAAErCAAAAAEsCAAiACELFQAAIAAgGAAAIQAgGQAAIQAgJUAAAAABJkAAAAAEJ0AAAAAEKEAAAAABKUAAAAABKkAAAAABK0AAAAABLEAAHwAhCxUAACAAIBgAACEAIBkAACEAICVAAAAAASZAAAAABCdAAAAABChAAAAAASlAAAAAASpAAAAAAStAAAAAASxAAB8AIQglAgAAAAEmAgAAAAQnAgAAAAQoAgAAAAEpAgAAAAEqAgAAAAErAgAAAAEsAgAgACEIJUAAAAABJkAAAAAEJ0AAAAAEKEAAAAABKUAAAAABKkAAAAABK0AAAAABLEAAIQAhDRUAACAAIBYAACMAIBcAACMAIBgAACMAIBkAACMAICUIAAAAASYIAAAABCcIAAAABCgIAAAAASkIAAAAASoIAAAAASsIAAAAASwIACIAIQglCAAAAAEmCAAAAAQnCAAAAAQoCAAAAAEpCAAAAAEqCAAAAAErCAAAAAEsCAAjACEOFQAAIAAgGAAAJQAgGQAAJQAgJQEAAAABJgEAAAAEJwEAAAAEKAEAAAABKQEAAAABKgEAAAABKwEAAAABLAEAJAAhLQEAAAABLgEAAAABLwEAAAABCyUBAAAAASYBAAAABCcBAAAABCgBAAAAASkBAAAAASoBAAAAASsBAAAAASwBACUAIS0BAAAAAS4BAAAAAS8BAAAAAQ0VAAAgACAWAAAjACAXAAAgACAYAAAgACAZAAAgACAlAgAAAAEmAgAAAAQnAgAAAAQoAgAAAAEpAgAAAAEqAgAAAAErAgAAAAEsAgAmACEJHAAAJwAwHQAABAAQHgAAJwAwHwIAKAAhIAEAKQAhIQgAKgAhIggAKgAhI0AAKwAhJEAAKwAhCCUCAAAAASYCAAAABCcCAAAABCgCAAAAASkCAAAAASoCAAAAASsCAAAAASwCACAAIQslAQAAAAEmAQAAAAQnAQAAAAQoAQAAAAEpAQAAAAEqAQAAAAErAQAAAAEsAQAlACEtAQAAAAEuAQAAAAEvAQAAAAEIJQgAAAABJggAAAAEJwgAAAAEKAgAAAABKQgAAAABKggAAAABKwgAAAABLAgAIwAhCCVAAAAAASZAAAAABCdAAAAABChAAAAAASlAAAAAASpAAAAAAStAAAAAASxAACEAIQAAAAAAATABAAAAAQUwCAAAAAExCAAAAAEyCAAAAAEzCAAAAAE0CAAAAAEBMEAAAAABBTACAAAAATECAAAAATICAAAAATMCAAAAATQCAAAAAQAAAAAFFQAGFgAHFwAIGAAJGQAKAAAAAAAFFQAGFgAHFwAIGAAJGQAKAQIBAgMBBQYBBgcBBwgBCQoBCgwCCw0DDA8BDRECDhIEERMBEhQBExUCGhgFGxkL"
 }
 config.compilerWasm = {
