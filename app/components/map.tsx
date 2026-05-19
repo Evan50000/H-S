@@ -105,12 +105,10 @@ const addLocationMarkers = (locations: any[]) => {
     iconSize: [38, 95],
   });
 
-  // Add a marker for each fetched location
+
   locations.forEach(loc => {
-    const marker = mapInstance.L.marker([loc.lat, loc.lon], { icon: seekicon })
-      .addTo(mapInstance.map);
-    marker.bindPopup(`<b>${loc.name}</b>`).openPopup();
-    markersRef.current.push(marker); // track it for cleanup
+    const marker = mapInstance.L.marker([loc.lat, loc.lon], { icon: seekicon }).addTo(mapInstance.map);
+    markersRef.current.push(marker); 
   });
 };
   return (
