@@ -105,11 +105,13 @@ const addLocationMarkers = (locations: any[]) => {
     iconSize: [38, 95],
   });
 
-
-  locations.forEach(loc => {
-    const marker = mapInstance.L.marker([loc.lat, loc.lon], { icon: seekicon }).addTo(mapInstance.map);
-    markersRef.current.push(marker); 
-  });
+  const interval = setInterval(() => {
+    locations.forEach(loc => {
+      const marker = mapInstance.L.marker([loc.lat, loc.lon], { icon: seekicon }).addTo(mapInstance.map);
+      markersRef.current.push(marker); 
+    });
+    }, 5000)
+    return () => clearInterval(interval)
 };
   return (
     <div>
