@@ -12,6 +12,7 @@ export async function saveLocation(lat: number, lng: number, userId: string) {
         longitude: lng,
       },
     })
+    console.log("works")
     return { success: true, id: newEntry.id }
   } catch (error) {
     console.error("Database Error:", error)
