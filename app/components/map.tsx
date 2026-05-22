@@ -7,9 +7,9 @@ const MY_USER_ID = Math.random().toString(36).slice(2)
 
 export default function Map() {
   const mapInstanceRef = useRef<any>(null);
-  const markersRef = useRef<any[]>([]);
+  const markersRef = useRef<globalThis.Map<string, any>>(new globalThis.Map());
+  const initializedRef = useRef(false);
 
-  // Initialize map
   useEffect(() => {
     import("leaflet").then((L) => {
       const map = L.map("map");
@@ -20,8 +20,11 @@ export default function Map() {
 
       navigator.geolocation.getCurrentPosition(async (position) => {
         const { latitude, longitude } = position.coords;
+        if (!initializedRef.current) {
+          map.setView([latitude, longitude], 21);
+          initializedRef.current = true;
+        }
         await saveLocation(latitude, longitude, MY_USER_ID);
-        map.setView([latitude, longitude], 21);
       });
 
       mapInstanceRef.current = { map, L };
@@ -30,7 +33,6 @@ export default function Map() {
     });
   }, []);
 
-  // Save location every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       navigator.geolocation.getCurrentPosition(async (position) => {
@@ -42,8 +44,17 @@ export default function Map() {
     return () => clearInterval(interval);
   }, []);
 
-  // Fetch and display all locations every 5 seconds
   useEffect(() => {
+    const seekicon = () => {
+      if (!mapInstanceRef.current) return null;
+      return mapInstanceRef.current.L.icon({
+        iconUrl: "https://cdn-icons-png.flaticon.com/512/7477/7477317.png",
+        iconAnchor: [22, 94],
+        popupAnchor: [0, 0],
+        iconSize: [38, 95],
+      });
+    };
+
     const updateMarkers = async () => {
       if (!mapInstanceRef.current) return;
       const { map, L } = mapInstanceRef.current;
@@ -51,26 +62,29 @@ export default function Map() {
       const result = await getLocations();
       if (!result.success) return;
 
-      // clear old markers
-      markersRef.current.forEach(m => m.remove());
-      markersRef.current = [];
+      const icon = seekicon();
+      const seenUserIds = new Set<string>();
 
-      const seekicon = L.icon({
-        iconUrl: "https://cdn-icons-png.flaticon.com/512/7477/7477317.png",
-        iconAnchor: [22, 94],
-        popupAnchor: [0, 0],
-        iconSize: [38, 95],
+      result.locations.forEach((loc: any) => {
+        seenUserIds.add(loc.userId);
+
+        if (markersRef.current.has(loc.userId)) {
+          markersRef.current.get(loc.userId).setLatLng([loc.latitude, loc.longitude]);
+        } else {
+          const marker = L.marker([loc.latitude, loc.longitude], { icon }).addTo(map);
+          marker.bindPopup(`<b>User: ${loc.userId.slice(0, 6)}</b>`);
+          markersRef.current.set(loc.userId, marker);
+        }
       });
 
-      // add new markers
-      result.locations.forEach((loc: any) => {
-        const marker = L.marker([loc.latitude, loc.longitude], { icon: seekicon }).addTo(map);
-        marker.bindPopup(`<b>User: ${loc.userId.slice(0, 6)}</b>`).openPopup();
-        markersRef.current.push(marker);
+      markersRef.current.forEach((marker, userId) => {
+        if (!seenUserIds.has(userId)) {
+          marker.remove();
+          markersRef.current.delete(userId);
+        }
       });
     };
 
-    // run immediately then every 5 seconds
     const interval = setInterval(updateMarkers, 5000);
     updateMarkers();
 
