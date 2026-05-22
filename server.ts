@@ -13,13 +13,13 @@ const io = new Server(httpServer, {
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
 
-  // When a user sends their location
+
   socket.on("sendLocation", (data: { 
     userId: string; 
     latitude: number; 
     longitude: number 
   }) => {
-    // Broadcast to all OTHER users
+
     socket.broadcast.emit("receiveLocation", data);
   });
 

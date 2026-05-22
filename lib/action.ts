@@ -12,10 +12,18 @@ export async function saveLocation(lat: number, lng: number, userId: string) {
         longitude: lng,
       },
     })
-    console.log("works")
     return { success: true, id: newEntry.id }
   } catch (error) {
     console.error("Database Error:", error)
     return { success: false }
+  }
+}
+export async function getLocations() {
+  try {
+    const locations = await db.userLocation.findMany()
+    return { success: true, locations }
+  } catch (error) {
+    console.error("Database Error:", error)
+    return { success: false, locations: [] }
   }
 }

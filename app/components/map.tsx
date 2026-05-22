@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, FormEvent, useRef} from "react";
 import "leaflet/dist/leaflet.css";
-import { saveLocation } from "@/lib/action";
+import { saveLocation, getLocations } from "@/lib/action";
 const MY_USER_ID = Math.random().toString(36).slice(2)
 
 export default function Map() {
@@ -26,9 +26,7 @@ export default function Map() {
         const longitude = position.coords.longitude;
         console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
         await saveLocation(latitude, longitude, MY_USER_ID);
-        const marker = L.marker([latitude, longitude], { icon: seekicon }).addTo(map);
         map.setView([latitude, longitude], 21)
-        marker.bindPopup("<b>your location</b><br>you rn").openPopup();
       });
 
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -69,7 +67,6 @@ export default function Map() {
 
     const interval = setInterval(() => {
       sendLocation()
-      fetchLocations()
     }, 5000)
 
     return () => clearInterval(interval)
@@ -105,13 +102,19 @@ const addLocationMarkers = (locations: any[]) => {
     iconSize: [38, 95],
   });
 
-  const interval = setInterval(() => {
+  const interval = setInterval(async () => {
+    const { locations } = await getLocations()
+    
+    // clear old markers
+    markersRef.current.forEach(m => m.remove())
+    markersRef.current = []
+
+    // add new markers
     locations.forEach(loc => {
-      const marker = mapInstance.L.marker([loc.lat, loc.lon], { icon: seekicon }).addTo(mapInstance.map);
-      markersRef.current.push(marker); 
-    });
-    }, 5000)
-    return () => clearInterval(interval)
+      const marker = mapInstance.L.marker([loc.latitude, loc.longitude], { icon: seekicon }).addTo(mapInstance.map)
+      markersRef.current.push(marker)
+    })
+  }, 5000)
 };
   return (
     <div>
