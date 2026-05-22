@@ -3,7 +3,16 @@ import { useEffect, useRef } from "react";
 import "leaflet/dist/leaflet.css";
 import { saveLocation, getLocations } from "@/lib/action";
 
-const MY_USER_ID = Math.random().toString(36).slice(2)
+const getUserId = () => {
+  if (typeof window === "undefined") return "";
+  const existing = localStorage.getItem("userId");
+  if (existing) return existing;
+  const newId = Math.random().toString(36).slice(2);
+  localStorage.setItem("userId", newId);
+  return newId;
+}
+
+const MY_USER_ID = getUserId();
 
 export default function Map() {
   const mapInstanceRef = useRef<any>(null);
