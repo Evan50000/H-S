@@ -3,21 +3,22 @@ import { useEffect, useRef } from "react";
 import "leaflet/dist/leaflet.css";
 import { saveLocation, getLocations } from "@/lib/action";
 
-const getUserId = () => {
-  if (typeof window === "undefined") return "";
-  let id = localStorage.getItem("userId");
-  if (!id) {
-    id = Math.random().toString(36).slice(2);
-    localStorage.setItem("userId", id);
-  }
-  return id;
-}
-const MY_USER_ID = getUserId();
-
 export default function Map() {
   const mapInstanceRef = useRef<any>(null);
   const markersRef = useRef<globalThis.Map<string, any>>(new globalThis.Map());
   const initializedRef = useRef(false);
+  const userIdRef = useRef<string>("");
+
+  useEffect(() => {
+    const existing = localStorage.getItem("userId");
+    if (existing) {
+      userIdRef.current = existing;
+    } else {
+      const newId = Math.random().toString(36).slice(2);
+      localStorage.setItem("userId", newId);
+      userIdRef.current = newId;
+    }
+  }, []);
 
   useEffect(() => {
     import("leaflet").then((L) => {
@@ -41,17 +42,18 @@ export default function Map() {
   }, []);
 
   useEffect(() => {
-  const save = () => {
-    navigator.geolocation.getCurrentPosition(async (position) => {
-      const { latitude, longitude } = position.coords;
-      await saveLocation(latitude, longitude, MY_USER_ID);
-    });
-  };
+    const save = () => {
+      if (!userIdRef.current) return; 
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+        await saveLocation(latitude, longitude, userIdRef.current);
+      });
+    };
 
-  save();
-  const interval = setInterval(save, 5000);
-  return () => clearInterval(interval);
-}, [MY_USER_ID]);
+    save();
+    const interval = setInterval(save, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const seekicon = () => {
