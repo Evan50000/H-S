@@ -33,7 +33,6 @@ export default function Map() {
           map.setView([latitude, longitude], 21);
           initializedRef.current = true;
         }
-        await saveLocation(latitude, longitude, MY_USER_ID);
       });
 
       mapInstanceRef.current = { map, L };
