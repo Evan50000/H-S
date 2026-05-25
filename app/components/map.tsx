@@ -5,13 +5,13 @@ import { saveLocation, getLocations } from "@/lib/action";
 
 const getUserId = () => {
   if (typeof window === "undefined") return "";
-  const existing = localStorage.getItem("userId");
-  if (existing) return existing;
-  const newId = Math.random().toString(36).slice(2);
-  localStorage.setItem("userId", newId);
-  return newId;
+  let id = localStorage.getItem("userId");
+  if (!id) {
+    id = Math.random().toString(36).slice(2);
+    localStorage.setItem("userId", id);
+  }
+  return id;
 }
-
 const MY_USER_ID = getUserId();
 
 export default function Map() {
@@ -48,7 +48,7 @@ export default function Map() {
     });
   };
 
-  save(); // runs immediately on mount
+  save();
   const interval = setInterval(save, 5000);
   return () => clearInterval(interval);
 }, [MY_USER_ID]);
