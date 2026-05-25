@@ -40,7 +40,7 @@ export default function Map() {
       return () => map.remove();
     });
   }, []);
-
+/*
   useEffect(() => {
     const interval = setInterval(() => {
       navigator.geolocation.getCurrentPosition(async (position) => {
@@ -51,7 +51,7 @@ export default function Map() {
 
     return () => clearInterval(interval);
   }, []);
-
+*/
   useEffect(() => {
     const seekicon = () => {
       if (!mapInstanceRef.current) return null;
