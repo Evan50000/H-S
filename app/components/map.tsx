@@ -36,22 +36,23 @@ export default function Map() {
       });
 
       mapInstanceRef.current = { map, L };
-
       return () => map.remove();
     });
   }, []);
-/*
-  useEffect(() => {
-    const interval = setInterval(() => {
-      navigator.geolocation.getCurrentPosition(async (position) => {
-        const { latitude, longitude } = position.coords;
-        await saveLocation(latitude, longitude, MY_USER_ID);
-      });
-    }, 5000);
 
-    return () => clearInterval(interval);
-  }, []);
-*/
+  useEffect(() => {
+  const save = () => {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const { latitude, longitude } = position.coords;
+      await saveLocation(latitude, longitude, MY_USER_ID);
+    });
+  };
+
+  save(); // runs immediately on mount
+  const interval = setInterval(save, 5000);
+  return () => clearInterval(interval);
+}, [MY_USER_ID]);
+
   useEffect(() => {
     const seekicon = () => {
       if (!mapInstanceRef.current) return null;
@@ -95,7 +96,6 @@ export default function Map() {
 
     const interval = setInterval(updateMarkers, 5000);
     updateMarkers();
-
     return () => clearInterval(interval);
   }, []);
 
