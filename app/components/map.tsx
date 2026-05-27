@@ -42,13 +42,25 @@ export default function Map() {
   }, []);
 
 useEffect(() => {
-  const save = () => {
+  let isSaving = false;
+
+  const save = async () => {
+    if (isSaving) return; 
     const id = localStorage.getItem("userId");
     if (!id) return;
-    navigator.geolocation.getCurrentPosition(async (position) => {
-      const { latitude, longitude } = position.coords;
-      await saveLocation(latitude, longitude, id);
-    });
+
+    isSaving = true;
+    try {
+      await new Promise<void>((resolve) => {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+          const { latitude, longitude } = position.coords;
+          await saveLocation(latitude, longitude, id);
+          resolve();
+        });
+      });
+    } finally {
+      isSaving = false; 
+    }
   };
 
   save();
