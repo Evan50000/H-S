@@ -45,27 +45,27 @@ export default function Map() {
 
 useEffect(() => {
   const save = async () => {
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    
-    debounceRef.current = setTimeout(async () => {
-      if (isSavingRef.current) return;
-      const id = localStorage.getItem("userId");
-      if (!id) return;
+  if (debounceRef.current) clearTimeout(debounceRef.current);
+  
+  debounceRef.current = setTimeout(async () => {
+    if (isSavingRef.current) return;
+    const id = localStorage.getItem("userId");
+    if (!id) return;
 
-      isSavingRef.current = true;
-      try {
-        await new Promise<void>((resolve) => {
-          navigator.geolocation.getCurrentPosition(async (position) => {
-            const { latitude, longitude } = position.coords;
-            await saveLocation(latitude, longitude, id);
-            resolve();
-          });
+    isSavingRef.current = true;
+    try {
+      await new Promise<void>((resolve) => {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+          const { latitude, longitude } = position.coords;
+          await saveLocation(latitude, longitude, id);
+          resolve();
         });
-      } finally {
-        isSavingRef.current = false;
-      }
-    }, 500);
-  };
+      });
+    } finally {
+      isSavingRef.current = false;
+    }
+  }, 1000); // increased to 1000ms for production
+};
 
   save();
   const interval = setInterval(save, 5000);
