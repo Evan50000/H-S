@@ -8,6 +8,8 @@ export default function Map() {
   const markersRef = useRef<globalThis.Map<string, any>>(new globalThis.Map());
   const initializedRef = useRef(false);
   const userIdRef = useRef<string>("");
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
+  const isSavingRef = useRef(false);
 
   useEffect(() => {
     const existing = localStorage.getItem("userId");
@@ -42,17 +44,15 @@ export default function Map() {
   }, []);
 
 useEffect(() => {
-  let isSaving = false;
-  let debounceTimer: NodeJS.Timeout;
-
   const save = async () => {
-    clearTimeout(debounceTimer); 
-    debounceTimer = setTimeout(async () => {
-      if (isSaving) return;
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    
+    debounceRef.current = setTimeout(async () => {
+      if (isSavingRef.current) return;
       const id = localStorage.getItem("userId");
       if (!id) return;
 
-      isSaving = true;
+      isSavingRef.current = true;
       try {
         await new Promise<void>((resolve) => {
           navigator.geolocation.getCurrentPosition(async (position) => {
@@ -62,16 +62,16 @@ useEffect(() => {
           });
         });
       } finally {
-        isSaving = false;
+        isSavingRef.current = false;
       }
-    }, 500); 
+    }, 500);
   };
 
   save();
   const interval = setInterval(save, 5000);
   return () => {
     clearInterval(interval);
-    clearTimeout(debounceTimer);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
   };
 }, []);
 
