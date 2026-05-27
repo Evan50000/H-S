@@ -29,3 +29,14 @@ export async function getLocations() {
     return { success: false, locations: [] }
   }
 }
+export async function deleteLocation(userId: string) {
+  try {
+    await db.userLocation.delete({
+      where: { userId }
+    })
+    return { success: true }
+  } catch (error) {
+    console.error("Database Error:", error)
+    return { success: false }
+  }
+}

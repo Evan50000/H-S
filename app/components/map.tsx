@@ -43,37 +43,49 @@ export default function Map() {
     });
   }, []);
 
-useEffect(() => {
-  const save = async () => {
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    
-    debounceRef.current = setTimeout(async () => {
-      if (isSavingRef.current) return;
-      const id = localStorage.getItem("userId");
-      if (!id) return;
+  useEffect(() => {
+    const save = async () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      
+      debounceRef.current = setTimeout(async () => {
+        if (isSavingRef.current) return;
+        const id = localStorage.getItem("userId");
+        if (!id) return;
 
-      isSavingRef.current = true;
-      try {
-        await new Promise<void>((resolve) => {
-          navigator.geolocation.getCurrentPosition(async (position) => {
-            const { latitude, longitude } = position.coords;
-            await saveLocation(latitude, longitude, id);
-            resolve();
+        isSavingRef.current = true;
+        try {
+          await new Promise<void>((resolve) => {
+            navigator.geolocation.getCurrentPosition(async (position) => {
+              const { latitude, longitude } = position.coords;
+              await saveLocation(latitude, longitude, id);
+              resolve();
+            });
           });
-        });
-      } finally {
-        isSavingRef.current = false;
-      }
-    }, 500);
-  };
+        } finally {
+          isSavingRef.current = false;
+        }
+      }, 500);
+    };
 
-  save();
-  const interval = setInterval(save, 5000);
-  return () => {
-    clearInterval(interval);
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-  };
-}, []);
+    save();
+    const interval = setInterval(save, 5000);
+    return () => {
+      clearInterval(interval);
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleUnload = () => {
+      const id = localStorage.getItem("userId")
+      if (!id) return
+      navigator.sendBeacon("/api/delete-location", JSON.stringify({ userId: id }))
+    }
+
+    window.addEventListener("beforeunload", handleUnload)
+    return () => window.removeEventListener("beforeunload", handleUnload)
+  }, [])
+
 
   useEffect(() => {
     const seekicon = () => {
@@ -85,7 +97,7 @@ useEffect(() => {
         iconSize: [38, 95],
       });
     };
-
+    
     const updateMarkers = async () => {
       if (!mapInstanceRef.current) return;
       const { map, L } = mapInstanceRef.current;
