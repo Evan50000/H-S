@@ -41,19 +41,20 @@ export default function Map() {
     });
   }, []);
 
-  useEffect(() => {
-    const save = () => {
-      if (!userIdRef.current) return; 
-      navigator.geolocation.getCurrentPosition(async (position) => {
-        const { latitude, longitude } = position.coords;
-        await saveLocation(latitude, longitude, userIdRef.current);
-      });
-    };
+useEffect(() => {
+  const save = () => {
+    const id = localStorage.getItem("userId");
+    if (!id) return;
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const { latitude, longitude } = position.coords;
+      await saveLocation(latitude, longitude, id);
+    });
+  };
 
-    save();
-    const interval = setInterval(save, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  save();
+  const interval = setInterval(save, 5000);
+  return () => clearInterval(interval);
+}, []);
 
   useEffect(() => {
     const seekicon = () => {
