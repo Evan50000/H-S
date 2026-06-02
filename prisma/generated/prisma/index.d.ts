@@ -895,6 +895,7 @@ export namespace Prisma {
     userId: string | null
     latitude: number | null
     longitude: number | null
+    seeker: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -904,6 +905,7 @@ export namespace Prisma {
     userId: string | null
     latitude: number | null
     longitude: number | null
+    seeker: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -913,6 +915,7 @@ export namespace Prisma {
     userId: number
     latitude: number
     longitude: number
+    seeker: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -936,6 +939,7 @@ export namespace Prisma {
     userId?: true
     latitude?: true
     longitude?: true
+    seeker?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -945,6 +949,7 @@ export namespace Prisma {
     userId?: true
     latitude?: true
     longitude?: true
+    seeker?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -954,6 +959,7 @@ export namespace Prisma {
     userId?: true
     latitude?: true
     longitude?: true
+    seeker?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1050,6 +1056,7 @@ export namespace Prisma {
     userId: string
     latitude: number
     longitude: number
+    seeker: boolean
     createdAt: Date
     updatedAt: Date
     _count: UserLocationCountAggregateOutputType | null
@@ -1078,6 +1085,7 @@ export namespace Prisma {
     userId?: boolean
     latitude?: boolean
     longitude?: boolean
+    seeker?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["userLocation"]>
@@ -1087,6 +1095,7 @@ export namespace Prisma {
     userId?: boolean
     latitude?: boolean
     longitude?: boolean
+    seeker?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["userLocation"]>
@@ -1096,6 +1105,7 @@ export namespace Prisma {
     userId?: boolean
     latitude?: boolean
     longitude?: boolean
+    seeker?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["userLocation"]>
@@ -1105,11 +1115,12 @@ export namespace Prisma {
     userId?: boolean
     latitude?: boolean
     longitude?: boolean
+    seeker?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserLocationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "latitude" | "longitude" | "createdAt" | "updatedAt", ExtArgs["result"]["userLocation"]>
+  export type UserLocationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "latitude" | "longitude" | "seeker" | "createdAt" | "updatedAt", ExtArgs["result"]["userLocation"]>
 
   export type $UserLocationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "UserLocation"
@@ -1119,6 +1130,7 @@ export namespace Prisma {
       userId: string
       latitude: number
       longitude: number
+      seeker: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["userLocation"]>
@@ -1548,6 +1560,7 @@ export namespace Prisma {
     readonly userId: FieldRef<"UserLocation", 'String'>
     readonly latitude: FieldRef<"UserLocation", 'Float'>
     readonly longitude: FieldRef<"UserLocation", 'Float'>
+    readonly seeker: FieldRef<"UserLocation", 'Boolean'>
     readonly createdAt: FieldRef<"UserLocation", 'DateTime'>
     readonly updatedAt: FieldRef<"UserLocation", 'DateTime'>
   }
@@ -1940,6 +1953,7 @@ export namespace Prisma {
     userId: 'userId',
     latitude: 'latitude',
     longitude: 'longitude',
+    seeker: 'seeker',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -2011,6 +2025,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -2035,6 +2056,7 @@ export namespace Prisma {
     userId?: StringFilter<"UserLocation"> | string
     latitude?: FloatFilter<"UserLocation"> | number
     longitude?: FloatFilter<"UserLocation"> | number
+    seeker?: BoolFilter<"UserLocation"> | boolean
     createdAt?: DateTimeFilter<"UserLocation"> | Date | string
     updatedAt?: DateTimeFilter<"UserLocation"> | Date | string
   }
@@ -2044,6 +2066,7 @@ export namespace Prisma {
     userId?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
+    seeker?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2056,6 +2079,7 @@ export namespace Prisma {
     NOT?: UserLocationWhereInput | UserLocationWhereInput[]
     latitude?: FloatFilter<"UserLocation"> | number
     longitude?: FloatFilter<"UserLocation"> | number
+    seeker?: BoolFilter<"UserLocation"> | boolean
     createdAt?: DateTimeFilter<"UserLocation"> | Date | string
     updatedAt?: DateTimeFilter<"UserLocation"> | Date | string
   }, "id" | "userId">
@@ -2065,6 +2089,7 @@ export namespace Prisma {
     userId?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
+    seeker?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserLocationCountOrderByAggregateInput
@@ -2082,6 +2107,7 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"UserLocation"> | string
     latitude?: FloatWithAggregatesFilter<"UserLocation"> | number
     longitude?: FloatWithAggregatesFilter<"UserLocation"> | number
+    seeker?: BoolWithAggregatesFilter<"UserLocation"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"UserLocation"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"UserLocation"> | Date | string
   }
@@ -2090,6 +2116,7 @@ export namespace Prisma {
     userId: string
     latitude: number
     longitude: number
+    seeker?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2099,6 +2126,7 @@ export namespace Prisma {
     userId: string
     latitude: number
     longitude: number
+    seeker?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2107,6 +2135,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
+    seeker?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2116,6 +2145,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
+    seeker?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2125,6 +2155,7 @@ export namespace Prisma {
     userId: string
     latitude: number
     longitude: number
+    seeker?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2133,6 +2164,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
+    seeker?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2142,6 +2174,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     latitude?: FloatFieldUpdateOperationsInput | number
     longitude?: FloatFieldUpdateOperationsInput | number
+    seeker?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2183,6 +2216,11 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -2199,6 +2237,7 @@ export namespace Prisma {
     userId?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
+    seeker?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2214,6 +2253,7 @@ export namespace Prisma {
     userId?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
+    seeker?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2223,6 +2263,7 @@ export namespace Prisma {
     userId?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
+    seeker?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2283,6 +2324,14 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -2307,6 +2356,10 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -2355,6 +2408,11 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -2415,6 +2473,14 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
