@@ -129,9 +129,12 @@ const updateMarkers = async () => {
   }
 
 
-  const visibleLocations = seekerRef.current
-    ? result.locations
-    : result.locations.filter((loc: any) => loc.seeker);
+
+  let visibleLocations = result.locations;
+
+  if (seekerRef.current) {
+    visibleLocations = result.locations.filter((loc: any) => loc.seeker);
+  }
 
   visibleLocations.forEach((loc: any) => {
     seenUserIds.add(loc.userId);
@@ -165,6 +168,12 @@ const updateMarkers = async () => {
     const newValue = !seekerRef.current;
     seekerRef.current = newValue;
     setIsSeeker(newValue);
+    const id = localStorage.getItem("userId");
+    if (!id) return;
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const { latitude, longitude } = position.coords;
+      await saveLocation(latitude, longitude, id, newValue);
+    });
   };
 
   return (
