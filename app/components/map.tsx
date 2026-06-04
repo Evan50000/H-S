@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, MouseEvent } from "react";
 import "leaflet/dist/leaflet.css";
 import { saveLocation, getLocations } from "@/lib/action";
 
-// Haversine formula — returns distance in meters between two lat/lng points
+// Haversine formula — returns distance in meters between two lat/lng points (found online)
 const getDistanceMeters = (lat1: number, lon1: number, lat2: number, lon2: number) => {
   const R = 6371000;
   const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -101,50 +101,58 @@ export default function Map() {
     });
 
 
-    const updateMarkers = async () => {
-      if (!mapInstanceRef.current) return;
-      const { map, L } = mapInstanceRef.current;
+const updateMarkers = async () => {
+  if (!mapInstanceRef.current) return;
+  const { map, L } = mapInstanceRef.current;
 
-      const result = await getLocations();
-      if (!result.success) return;
+  const result = await getLocations();
+  if (!result.success) return;
 
-      const seenUserIds = new Set<string>();
-      const seekers: any[] = [];
-      const hiders: any[] = [];
-      result.locations.forEach((loc: any) => {
-        if (loc.seeker) seekers.push(loc);
-        else hiders.push(loc);
+  const seenUserIds = new Set<string>();
+  const seekers: any[] = [];
+  const hiders: any[] = [];
+
+  result.locations.forEach((loc: any) => {
+    if (loc.seeker) seekers.push(loc);
+    else hiders.push(loc);
+  });
+
+  if (!seekerRef.current) {
+    let anyNearby = false;
+    seekers.forEach((seeker) => {
+      hiders.forEach((hider) => {
+        const dist = getDistanceMeters(seeker.latitude, seeker.longitude, hider.latitude, hider.longitude);
+        if (dist <= 50) anyNearby = true;
       });
-      let anyNearby = false;
-      seekers.forEach((seeker) => {
-        hiders.forEach((hider) => {
-          const dist = getDistanceMeters(seeker.latitude, seeker.longitude, hider.latitude, hider.longitude);
-          if (dist <= 50) anyNearby = true;
-        });
-      });
-      setNearbyAlert(anyNearby);
+    });
+    setNearbyAlert(anyNearby);
+  }
 
-      result.locations.forEach((loc: any) => {
-        seenUserIds.add(loc.userId);
-        const icon = loc.seeker ? getIcon(L) : getIcon(L);
 
-        if (markersRef.current.has(loc.userId)) {
-          markersRef.current.get(loc.userId).setLatLng([loc.latitude, loc.longitude]);
-          markersRef.current.get(loc.userId).setIcon(icon);
-        } else {
-          const marker = L.marker([loc.latitude, loc.longitude], { icon }).addTo(map);
-          marker.bindPopup(`<b>${loc.seeker ? "Seeker" : "Hider"}: ${loc.userId.slice(0, 6)}</b>`);
-          markersRef.current.set(loc.userId, marker);
-        }
-      });
+  const visibleLocations = seekerRef.current
+    ? result.locations
+    : result.locations.filter((loc: any) => !loc.seeker);
 
-      markersRef.current.forEach((marker, userId) => {
-        if (!seenUserIds.has(userId)) {
-          marker.remove();
-          markersRef.current.delete(userId);
-        }
-      });
-    };
+  visibleLocations.forEach((loc: any) => {
+    seenUserIds.add(loc.userId);
+    const icon = getIcon(L);
+
+    if (markersRef.current.has(loc.userId)) {
+      markersRef.current.get(loc.userId).setLatLng([loc.latitude, loc.longitude]);
+      markersRef.current.get(loc.userId).setIcon(icon);
+    } else {
+      const marker = L.marker([loc.latitude, loc.longitude], { icon }).addTo(map);
+      marker.bindPopup(`<b> ${loc.userId.slice(0, 6)}</b>`);
+      markersRef.current.set(loc.userId, marker);
+    }
+  });
+  markersRef.current.forEach((marker, userId) => {
+    if (!seenUserIds.has(userId)) {
+      marker.remove();
+      markersRef.current.delete(userId);
+    }
+  });
+};
 
     const interval = setInterval(updateMarkers, 5000);
     updateMarkers();
@@ -168,7 +176,7 @@ export default function Map() {
         top: 10,
         left: 50,
         zIndex: 1000,
-        padding: "10px 20px",
+        padding: "10px 10px",
         background: "black",
         color: "white",
         border: "none",
