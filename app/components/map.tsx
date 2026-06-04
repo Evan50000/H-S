@@ -131,7 +131,7 @@ const updateMarkers = async () => {
 
   const visibleLocations = seekerRef.current
     ? result.locations
-    : result.locations.filter((loc: any) => !loc.seeker);
+    : result.locations.filter((loc: any) => loc.seeker);
 
   visibleLocations.forEach((loc: any) => {
     seenUserIds.add(loc.userId);
