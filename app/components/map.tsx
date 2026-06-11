@@ -24,6 +24,7 @@ export default function Map() {
   const seekerRef = useRef(false);
   const [isSeeker, setIsSeeker] = useState(false); 
   const [nearbyAlert, setNearbyAlert] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false);
 
   useEffect(() => {
     const existing = localStorage.getItem("userId");
@@ -177,7 +178,64 @@ const updateMarkers = async () => {
   };
 
   return (
+
   <div style={{ position: "relative" }}>
+  <>
+  {isSeeker && (
+    <button
+      onClick={() => setPopupOpen(true)}
+      style={{
+        position: "absolute",
+        top: 10,
+        right: 10,
+        zIndex: 1000,
+        padding: "10px 20px",
+        background: "black",
+        color: "white",
+        border: "none",
+        borderRadius: "8px",
+        cursor: "pointer",
+        fontWeight: "bold",
+      }}
+    >
+      Seeker options
+
+    </button>
+  )}
+  {popupOpen && (
+    <div style={{
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      zIndex: 2000,
+      background: "white",
+      padding: "20px",
+      borderRadius: "12px",
+      boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+      minWidth: "300px",
+    }}>
+      <button
+        onClick={() => setPopupOpen(false)}
+        style={{ float: "right", background: "none", border: "none", fontSize: "18px", cursor: "pointer" }}
+      >
+        ✕
+      </button>
+      <h3 style={{ marginTop: 0 }}>seeker options</h3>
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: "10px",
+        marginTop: "10px",
+      }}>
+        <button style={{color: "black"}}>radar 10km radius</button>
+        <button style={{color: "black"}}>radar 25km radius</button>
+        <button style={{color: "black"}}>north of me?</button>
+        <button style={{color: "black"}}>east of me?</button>
+      </div>
+    </div>
+  )}
+</>
     <button 
       onClick={seekeractivator}
       style={{
